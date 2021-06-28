@@ -25,7 +25,6 @@ const stringTypes = new Set([
     'tinytext',
     'set',
     'enum',
-    'json',
 ]);
 const bitTypes = new Set(['bit']);
 const hexTypes = new Set([
@@ -45,8 +44,9 @@ const geometryTypes = new Set([
     'multipolygon',
     'geometrycollection',
 ]);
+const jsonTypes = new Set(['json'])
 
-type ColumnTypes = 'STRING' | 'BIT' | 'HEX' | 'NUMBER' | 'GEOMETRY';
+type ColumnTypes = 'STRING' | 'BIT' | 'HEX' | 'NUMBER' | 'GEOMETRY' | 'JSON';
 function resolveType(columnType: string): ColumnTypes {
     if (numberTypes.has(columnType)) {
         return 'NUMBER';
@@ -54,6 +54,10 @@ function resolveType(columnType: string): ColumnTypes {
 
     if (stringTypes.has(columnType)) {
         return 'STRING';
+    }
+
+    if (jsonTypes.has(columnType)) {
+        return 'JSON';
     }
 
     if (hexTypes.has(columnType)) {

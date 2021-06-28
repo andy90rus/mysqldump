@@ -161,7 +161,8 @@ function typeCast(tables: Array<Table>): (field: TypecastField) => string {
         const columnType = resolveType(table.columns[field.name].type);
 
         let value: string | null = ''; // the else case shouldn't happen ever
-        /* istanbul ignore else */ if (columnType === 'GEOMETRY') {
+        /* istanbul ignore else */
+        if (columnType === 'GEOMETRY') {
             // parse and convert the binary representation to a nice string
             const buf = field.buffer();
             if (buf == null) {
@@ -169,6 +170,10 @@ function typeCast(tables: Array<Table>): (field: TypecastField) => string {
             } else {
                 value = parseGeometryValue(buf);
             }
+        } else if (columnType === 'JSON') {
+            const buf = field.buffer();
+            const value1 = buf.toString();
+            value = JSON.stringify(value1);
         } else if (columnType === 'STRING') {
             // sanitize the string types
             value = sqlstring.escape(field.string());
