@@ -12,6 +12,8 @@
         "test": "jest --ci --config=./jest.json",
         "test-prod": "JEST_USE_NPM_BUILD=true jest --ci --config=./test/jest-prod-config.js",
         "view-coverage": "open ./coverage/index.html",
+        "prepare" : "npm run build",
+        "postinstall": "npm run build",
         "build": "rollup -c && dts-bundle-generator -o dist/mysqldump.d.ts build-decl/main.d.ts --umd-module-name=mysqldump && rimraf build-decl",
         "clean": "rimraf dist && rimraf build-decl",
         "format": "prettier --write \"./**/*.{ts,js,json,md}\"",
